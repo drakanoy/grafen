@@ -17,7 +17,7 @@ plt.title(label='Распределение масс грузиков', loc='cen
 plt.plot(x, p(x), label='нормальное распределение')
 ax.grid()
 ax.set_xlabel('Масса, г')
+ax.set_ylabel('Плотность')
 sns_plot = sns.distplot(massy, hist=True, kde=True,
                         bins=5, color='red', label='реальное распределение')
-plt.legend()
 plt.show()
