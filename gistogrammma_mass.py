@@ -18,6 +18,6 @@ plt.plot(x, p(x), label='нормальное распределение')
 ax.grid()
 ax.set_xlabel('Масса, г')
 ax.set_ylabel('Плотность')
-sns_plot = sns.distplot(massy, hist=True, kde=True,
+sns_plot = sns.displot(massy, kind='hist', kde=True,
                         bins=5, color='red', label='реальное распределение')
 plt.show()
