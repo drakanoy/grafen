@@ -7,7 +7,7 @@ t.sort()
 I_exp = lambda t: 0.013 + (98.75 - 40) * 10 ** -3 * t ** 2
 I_exp_list = [I_exp(i) for i in t]
 fig, ax = plt.subplots()
-z = np.polyfit(t, I_exp_list, 2)
+z = np.polyfit(t, I_exp_list, 1)
 p = np.poly1d(z)
 print(p)
 y1 = p(t)
