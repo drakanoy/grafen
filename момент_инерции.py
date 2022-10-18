@@ -2,9 +2,9 @@ import numpy as np
 from matplotlib import cm
 import matplotlib.pyplot as plt
 
-t = [9.091, 5.935, 4.726]
+t = []
 t.sort()
-I_exp = lambda t: 0.013 + (98.75 - 40) * 10 ** -3 * t ** 2
+I_teor = lambda r: 0.013 + (98.75 - 40) * 10 ** -3 * t ** 2
 I_exp_list = [I_exp(i) for i in t]
 fig, ax = plt.subplots()
 z = np.polyfit(t, I_exp_list, 1)
