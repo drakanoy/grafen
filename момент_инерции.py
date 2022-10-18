@@ -2,7 +2,7 @@ import numpy as np
 from matplotlib import cm
 import matplotlib.pyplot as plt
 
-t = []
+t = [] # коорденально менять надо
 t.sort()
 I_teor = lambda r: 0.013 + (98.75 - 40) * 10 ** -3 * t ** 2
 I_exp_list = [I_exp(i) for i in t]
