@@ -21,7 +21,7 @@ p = np.poly1d(z)
 print(p)
 y1 = p(r_t)
 print(y1)
-plt.plot(r, p(r), '-g', label='fufufu')
+plt.plot(r, p(r), '-g', label='Квадратичная апроксимация')
 plt.plot(r_t, I_exp_list, '.', label='Экспериментальные точки')
 plt.plot(r, I_teor(r), '-r', label='Теоретическая зависимость')
 plt.title(label='Зависимость момента инерции физического маятника \n от расстояния между точкой А и грузиками',
