@@ -2,26 +2,29 @@ from matplotlib import cm
 import matplotlib.pyplot as plt
 import numpy as np
 
-nu = 1.004 * 10**6  # кинематическая вязкость м2/с
-D = 0.15  # м
-d = 0.06  # м
-wD = 0
-wd = np.arange(0, 100000, 1)
+nu = 1.004 * 10**-6  # кинематическая вязкость м2/с
+b = 0.145  # м
+a = 0.095  # м
+
+w = np.arange(0, 0.3, 0.001)
 
 
-q = lambda wd: 2000 +0* wd
-A = lambda wd: 2 * d**2 * D**2 * (wD-wd) / (D**2 - d**2)
-B = lambda wd: (D**2 * wD - d**2 * wd) / (D**2 - d**2)
+q550 = lambda wd: 550 +0* wd
+q57 = lambda wd: 57 +0* wd
+A = lambda w: w * a**2 * b**2 / (b**2 - a**2)
+B = lambda w: -w * a**2 / (b**2 - a**2)
 
 
-u = lambda wd: -A(wd) * np.log(D/d) / (D-d) + 0.5 * B(wd) * (D+d)  # скорость м/с
-Re = lambda wd: u(wd) * (D-d) / nu
+
+Re = lambda w: (A(w) * np.log(b/a) + 0.5 * B(w) * (b**2-a**2)) / nu
 
 
 fig, ax = plt.subplots()
 
-plt.plot(wd, Re(wd), '-r', label='полезное число Рейнольдса')
-#plt.plot(wd, q(wd), '-g', label='gkgfu')
+plt.plot(w, Re(w), '-r', label='число Рейнольдса')
+plt.plot(w, q550(w), '-g', label='верхний предел \n Ω = 0.254 c$^-$$^1$ \n Ω = 1.56 об/мин')
+plt.plot(w, q57(w), '-b', label='нижний предел \n Ω = 0.026 c$^-$$^1$ \n Ω = 15.24 об/мин')
+
 plt.title(label='число Рейнольдса', loc='center', fontweight='regular')
 
 ax.grid()
