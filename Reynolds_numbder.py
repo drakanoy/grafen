@@ -2,7 +2,7 @@ from matplotlib import cm
 import matplotlib.pyplot as plt
 import numpy as np
 
-nu = 19.17 * 10 ** -6  # кинематическая вязкость м2/с
+nu = 1.004 * 10 ** -6  # кинематическая вязкость м2/с
 b = 75 * 10 ** (-3)  # м
 a = 49 * 10 ** (-3)  # м
 
