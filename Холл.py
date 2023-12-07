@@ -16,8 +16,8 @@ p = np.poly1d(z)
 print(p)
 plt.plot(B, U, '.', label='Экспериментальные точки')
 # plt.errorbar(T, U, yerr=U_pogr, fmt='b.')
-plt.plot(B, p(B), '-r', label='Аппроксимация \n $U_{\perp} = 4.902 \cdot 10^{-6} B + 5.3 \cdot 10^{-7}$')
-plt.title(label='Зависимость поперечного напряжения \n от индукции магнитного поля', loc='center',
+plt.plot(B, p(B), '-r', label='Аппроксимация \n $U_{\perp} = 0.0049 \cdot B + 0.53$')
+plt.title(label='Зависимость поперечного напряжения \n от индукции магнитного поля в Zn', loc='center',
           fontweight='regular')
 ax.grid()
 ax.set_xlabel('B, мТл')
