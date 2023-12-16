@@ -44,7 +44,7 @@ plt.title(label='Зависимость поперечного напряжен�
           fontweight='regular')
 ax.grid()
 ax.set_xlabel('B, мT')
-ax.set_ylabel('$U_{\perp}$ , В')
+ax.set_ylabel('$U_{\perp}$ , мВ')
 plt.legend()
 plt.show()
 
@@ -90,6 +90,6 @@ plt.title(label='Зависимость поперечного напряжен�
           fontweight='regular')
 ax.grid()
 ax.set_xlabel('B, мT')
-ax.set_ylabel('$U_{\perp}$ , В')
+ax.set_ylabel('$U_{\perp}$ , мВ')
 plt.legend()
 plt.show()
