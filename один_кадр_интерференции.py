@@ -47,6 +47,7 @@ plt.yticks(np.arange(0, 1*side, 10))
 plt.colorbar()
 plt.grid()
 plt.show()
-plt.plot(list(range(500)), y_list, 'r')
+x_list = [i / 5 for i in range(500)]
+plt.plot(x_list, y_list, 'r')
 plt.grid()
 plt.show()
