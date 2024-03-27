@@ -1,11 +1,11 @@
 import numpy as np
-from pylab import imshow, gray, show
 import matplotlib.pyplot as plt
 from matplotlib.animation import ArtistAnimation
 
-wavelength = 5   # длина волны в м 2 или 5
+wavelength = 2  # длина волны в м
 k = 2 * np.pi / wavelength
-w = 5  # частота в рад/с 1 или 5
+w0 = 1  # основная частота в рад/с
+dw = 0.1  # диапазон отклонения частоты
 xi0 = 1.0
 separation = 20.0  # Расстояние между центрами окружностей в м
 side = 100.0  # Сторона квадрата в м
@@ -32,21 +32,19 @@ for t in np.arange(0, 2*np.pi, 0.1):
             x = spacing * j
             r1 = np.sqrt((x - x1) ** 2 + (y - y1) ** 2)
             r2 = np.sqrt((x - x2) ** 2 + (y - y2) ** 2)
-            xi[i, j] = xi0 * np.sin(w * t - k * r1) + xi0 * np.sin(w * t - k * r2)
+            xi[i, j] = 0
+            # Вычисление высоты с учетом декогерентности
+            for w in np.arange(w0-dw, w0+dw, 0.01):
+                xi[i, j] += xi0 * np.sin(w * t - k * r1) / 10 + xi0 * np.sin(w * t - k * r2) / 10
     im = ax.imshow(xi, cmap='plasma', origin="lower", extent=[0, side, 0, side])
     frames.append([im])
 
-
-#imshow(xi, cmap='plasma', origin="lower", extent=[0, side, 0, side])
-#show()
 animation = ArtistAnimation(
     fig,           # Фигура, где отображается анимация
     frames,        # Кадры
     interval=30,   # Задержка между кадрами в мс
     blit=True,     # Использовать ли двойную буферизацию
-    repeat=True,    # Зациклить ли анимацию
-#    cmap='plasma'
+    repeat=True    # Зациклить ли анимацию
 )
-#plt.colorbar()
 fig.colorbar(im, cax=cax)
 plt.show()
