@@ -1,5 +1,4 @@
 import numpy as np
-from pylab import imshow, gray, show
 import matplotlib.pyplot as plt
 
 wavelength = 2  # длина волны в м

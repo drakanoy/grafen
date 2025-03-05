@@ -1,5 +1,4 @@
 import numpy as np
-from pylab import imshow, gray, show
 import matplotlib.pyplot as plt
 from matplotlib.animation import ArtistAnimation
 
