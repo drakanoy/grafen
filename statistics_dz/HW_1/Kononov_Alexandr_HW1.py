@@ -91,13 +91,12 @@ h_1 = 2 * IQR/ n**(1/3) # оптимальная ширина бина для г
 nbins = int(np.ceil((max(data) - min(data)) / h_1)) # число бинов
 edges = np.linspace(min(data), max(data), nbins + 1)
 
-x = np.linspace(0, 110, 1000)
 ax.hist(data, bins=edges, density=True, edgecolor='black', alpha=0.7, label='Гистограмма нормарованная')
 
 
 sigma = min((s2_m)**0.5, IQR/1.34)
 h_2 = 1.06 * sigma/ n**(1/5) # оптимальная ширина бина для kde
-#x = np.linspace(0, 110, 1000)
+x = np.linspace(0, 110, 1000)
 plt.plot(x, [kde(i, data, s2, h_2) for i in x], '-b', label='kde')
 
 ax.grid()
