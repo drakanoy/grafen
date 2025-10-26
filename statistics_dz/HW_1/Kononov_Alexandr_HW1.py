@@ -74,11 +74,11 @@ widths  = np.diff(edges)
 centers = (edges[:-1] + edges[1:]) / 2
 p_hat   = counts / n
 f_hat   = counts / (n * widths)
-err_hist     = np.sqrt(p_hat * (1 - p_hat) / (n * widths**2))
+err_hist = z_student*np.sqrt(p_hat * (1 - p_hat) / (n * widths**2))
 
 # рисуем ошибки
 ax.errorbar(centers, f_hat, yerr=err_hist, fmt='none', capsize=3, elinewidth=1.2,
-            label='$ \pm 1 \sigma$')
+            label='Интервальная оценка')
 
 ax.grid()
 ax.set_xlabel('$x$')
@@ -112,7 +112,7 @@ edges = np.linspace(min(data), max(data), nbins + 1)
 
 ax.hist(data, bins=edges, density=True, edgecolor='black', alpha=0.7, label='Гистограмма нормарованная')
 ax.errorbar(centers, f_hat, yerr=err_hist, fmt='none', capsize=3, elinewidth=1.2,
-            label='$ \pm 1 \sigma$')
+            label='Интервальная оценка')
 
 
 sigma = min((s2_m)**0.5, IQR/1.34)
