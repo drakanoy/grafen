@@ -17,10 +17,11 @@ def edf(data, a):# выборочная функция распределени�
     IQR = k_075 - k_025
     return y, e, IQR
 
-def kde(x, data, s2_kernel, h):
+def kde(x, data, h, z):
     n = len(data)
-    f = 1/n * sum(1/h * norm.pdf((x - data)/h, scale=(s2_kernel)**0.5))
-    error = (f/(2*(np.pi)**0.5 * n * h * (s2_kernel)**0.5 ))**0.5
+    f = 1/(h*n) * sum(norm.pdf((x - data)/h))
+    # error = (f/(2*(np.pi)**0.5 * n * h * (s2_kernel)**0.5 ))**0.5
+    error = f - z*(f/(2 * (np.pi)**0.5 * n * h))**0.5
     return f, error
 
 
@@ -89,13 +90,13 @@ plt.show()
 
 # kde
 fig, ax = plt.subplots()
-sigma = min((s2_m)**0.5, IQR/1.34)
+sigma = min((s2)**0.5, IQR/1.34)
 h = 1.06 * sigma/ n**(1/5) # оптимальная ширина бина
 x = np.linspace(0, 110, 1000)
 
-plt.plot(x, [kde(i, data, s2, h)[0] for i in x], '-b', label='kde')
-plt.plot(x, [kde(i, data, s2, h)[0] + z_norm*kde(i, data, s2, h)[1] for i in x], '-r', label='kde+error')
-plt.plot(x, [kde(i, data, s2, h)[0] - z_norm*kde(i, data, s2, h)[1] for i in x], '-r', label='kde-error')
+plt.plot(x, [kde(i, data,  h, z_norm)[0] for i in x], '-b', label='kde')
+plt.plot(x, [kde(i, data,  h, z_norm)[0] + kde(i, data,  h, z_norm)[1] for i in x], '-r', label='kde+error')
+plt.plot(x, [kde(i, data,  h, z_norm)[0] - kde(i, data,  h, z_norm)[1] for i in x], '-r', label='kde-error')
 ax.grid()
 ax.set_xlabel('$x$')
 ax.set_ylabel('$f_n$')
@@ -115,12 +116,12 @@ ax.errorbar(centers, f_hat, yerr=err_hist, fmt='none', capsize=3, elinewidth=1.2
             label='Интервальная оценка')
 
 
-sigma = min((s2_m)**0.5, IQR/1.34)
+sigma = min((s2)**0.5, IQR/1.34)
 h_2 = 1.06 * sigma/ n**(1/5) # оптимальная ширина бина для kde
 x = np.linspace(0, 110, 1000)
-plt.plot(x, [kde(i, data, s2, h_2)[0] for i in x], '-b', label='kde')
-plt.plot(x, [kde(i, data, s2, h_2)[0] + z_norm*kde(i, data, s2, h_2)[1] for i in x], '-r', label='kde+error')
-plt.plot(x, [kde(i, data, s2, h_2)[0] - z_norm*kde(i, data, s2, h_2)[1] for i in x], '-r', label='kde-error')
+plt.plot(x, [kde(i, data,  h_2, z_norm)[0] for i in x], '-b', label='kde')
+plt.plot(x, [kde(i, data,  h_2, z_norm)[0] + kde(i, data,  h_2, z_norm)[1] for i in x], '-r', label='kde+error')
+plt.plot(x, [kde(i, data,  h_2, z_norm)[0] - kde(i, data,  h_2, z_norm)[1] for i in x], '-r', label='kde-error')
 ax.grid()
 ax.set_xlabel('$x$')
 ax.set_ylabel('$f_n$')
