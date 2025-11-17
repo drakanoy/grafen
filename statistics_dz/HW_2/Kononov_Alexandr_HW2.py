@@ -51,19 +51,20 @@ def Hessian(x, A, B, w):
     H[:, 2, 2] = -A * (x ** 2) * S - B * (x ** 2) * C  # ∂2r/∂w^2
     return H
 
-def d_and_D(x, y, sigma, A, B, w, r, J):
+def d_and_D(x, y, sigma, A, B, w, r, J, H):
     x = np.asarray(x, float)
     y = np.asarray(y, float)
     sigma = np.asarray(sigma, float)
 
     r = r(x, A, B, w)
     J = J(x, A, B, w)
+    H = H(x, A, B, w)
 
     # d_k = sum (y - r)/σ^2 * ∂r/∂a_k
     d = sum(J * ((y - r) / (sigma ** 2))[:, None])
 
     # D_kl = sum 1/σ^2 [ ∂r/∂a_k ∂r/∂a_l - (y-r) * ∂²r/∂a_k∂a_l ]
-    D = J.T @ (J / (sigma ** 2)[:, None])
+    D = J.T @ (J / (sigma ** 2)[:, None]) - np.tensordot((y - r)/ (sigma ** 2), H, axes=(0,0))
 
     return d, D
 
@@ -74,7 +75,7 @@ x2_0 = x2(x, y, sigma, r, A, B, w)
 lamda = 0.001
 dx2 = np.inf
 while abs(dx2) >= 10**(-6):
-    d, D = d_and_D(x, y, sigma, A, B, w, r, Jacobian)
+    d, D = d_and_D(x, y, sigma, A, B, w, r, Jacobian, Hessian)
     diag_idx = np.diag_indices_from(D)
     D[diag_idx] *= (1.0 + lamda)
 
@@ -88,8 +89,9 @@ while abs(dx2) >= 10**(-6):
         dx2 = x2_0 - x2_new
         A, B, w, x2_0 = A_new, B_new, w_new, x2_new
         lamda /= 10
-        C = np.linalg.inv(D)
 
+D[diag_idx] *= (1.0 - lamda)
+C = np.linalg.inv(D)
 
 print(f"A = {A:.2f} +- {C[0][0]**0.5:.2f}")
 print(f"B = {B:.2f} +- {C[1][1]**0.5:.2f}")
