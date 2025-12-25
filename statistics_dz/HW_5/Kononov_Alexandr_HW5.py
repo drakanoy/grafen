@@ -38,6 +38,7 @@ def logprior_logw(logw):
 a0, b0 = 1.0, 1.0
 tau = 5.0
 # A ~ N(0, tau**2)    B ~ N(0, tau**2)
+# betta = (A, B)
 
 
 # Монте-Карло
